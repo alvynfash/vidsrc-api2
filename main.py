@@ -17,12 +17,12 @@ async def stream(dbid:str = '',s:int=None,e:int=None,l:str='eng'):
     if dbid:
         sources = await vidsrcmeget(dbid,s,e) + await vidsrctoget(dbid,s,e)
         print(f"Sources for {dbid}: {sources}")  # Add this line
-        if sources and 'data' in sources[0] and 'stream' in sources[0]['data']:
-            return {
-                "stream":sources[0]['data']['stream']
+        # if sources and 'data' in sources[0] and 'stream' in sources[0]['data']:
+        return {
+            "stream":sources[0]['data']['stream']
             }
-        else:
-            raise HTTPException(status_code=404, detail=f"No stream found for id: {dbid}")
+        # else:
+            # raise HTTPException(status_code=404, detail=f"No stream found for id: {dbid}")
     else:
         raise HTTPException(status_code=404, detail=f"Invalid id: {dbid}")
 
