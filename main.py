@@ -12,6 +12,22 @@ from fastapi.responses import StreamingResponse
 
 app = FastAPI()
 
+@app.get('/stream/{dbid}')
+async def stream(dbid:str = '',s:int=None,e:int=None,l:str='eng'):
+    if dbid:
+        sources = await vidsrcmeget(dbid,s,e) + await vidsrctoget(dbid,s,e)
+        if sources and 'data' in sources[0] and 'stream' in sources[0]['data']:
+            return {
+                "status":200,
+                "info":"success",
+                "stream":sources[0]['data']['stream']
+            }
+        else:
+            raise HTTPException(status_code=404, detail=f"No stream found for id: {dbid}")
+    else:
+        raise HTTPException(status_code=404, detail=f"Invalid id: {dbid}")
+
+
 @app.get('/')
 async def index():
     return await info()
