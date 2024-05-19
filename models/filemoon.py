@@ -12,7 +12,7 @@ async def handle(url) -> dict:
     subtitles = await subtitle.vscsubs(SUB_URL)
 
 	# GET SRC
-    request = await fetch(url)
+    request = await fetch(SRC_URL)
     processed_matches = await process_packed_args(request.text)
     unpacked = await unpack(*processed_matches)
     hls_url = re.search(r'file:"([^"]*)"', unpacked).group(1)
