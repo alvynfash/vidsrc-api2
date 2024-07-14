@@ -50,7 +50,8 @@ async def fetch(url:str,headers:dict={},method:str="GET",data=None,redirects:boo
         headers["access-control-allow-headers"]= "Content-Type,Authorization"
         headers["access-control-allow-methods"]= "GET,POST,PUT,DELETE,OPTIONS"
         headers["access-control-expose-headers"]= "*"
-        
+        print(f"Fetching: {url}")
+        print(f"Headers: {headers}")
         if method=="GET":
             response = await client.get(url,headers=headers)
             return response
