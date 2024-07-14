@@ -13,7 +13,7 @@ from fastapi.responses import StreamingResponse
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://vidsrc-9pog13rr9-alvyns-projects.vercel.app/","https://vidsrc-9pog13rr9-alvyns-projects.vercel.app", "http://localhost:3000", "http://localhost:8000"],
+    allow_origins=["https://vidsrc-api-git-main-alvyns-projects.vercel.app/","https://vidsrc-api-git-main-alvyns-projects.vercel.app", "http://localhost:3000", "http://localhost:8000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
