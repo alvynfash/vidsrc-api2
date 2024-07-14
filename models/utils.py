@@ -47,7 +47,9 @@ async def fetch(url:str,headers:dict={},method:str="GET",data=None,redirects:boo
 
     async with httpx.AsyncClient(follow_redirects=redirects) as client:
         if method=="GET":
+            headers["access-control-allow-origin"]= "https://vidsrc-api-git-main-alvyns-projects.vercel.app"
             response = await client.get(url,headers=headers)
+            print("Response: ",response)
             return response
         if method=="POST":
             response = await client.post(url,headers=headers,data=data)
