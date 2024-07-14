@@ -46,43 +46,15 @@ async def fetch(url:str,headers:dict={},method:str="GET",data=None,redirects:boo
     print(f"Fetching: {url}")
 
     async with httpx.AsyncClient(follow_redirects=redirects) as client:
+        headers["User-Agent"] = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+        # cookies={"cf_clearance":"32xoEPSuDPXhdAPfCmau9P3MGnRfXD9_Cs83iEDXWrc-1720956533-1.0.1.1-IY.xEewBEyQ2WLVZHPvephKof6HfFD8LoOGcQrBZEsXW9J9nuNMcyUsGXoku7fgAY_fuECECCJkmztH5nX3Sng"},
         if method=="GET":
-            # headers["access-control-allow-origin"]= "https://vidsrc-api-git-main-alvyns-projects.vercel.app"
-            # headers["User-Agent"] = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
-            response = await client.get(
-                url,
-                headers=headers,
-                # cookies={"cf_clearance":"32xoEPSuDPXhdAPfCmau9P3MGnRfXD9_Cs83iEDXWrc-1720956533-1.0.1.1-IY.xEewBEyQ2WLVZHPvephKof6HfFD8LoOGcQrBZEsXW9J9nuNMcyUsGXoku7fgAY_fuECECCJkmztH5nX3Sng"},
-                follow_redirects=redirects,
-                )
+            response = await client.get(url, headers=headers, follow_redirects=redirects)
             print("Response: ",response)
             return response
         if method=="POST":
-            response = await client.post(url,headers=headers,data=data)
+            response = await client.post(url,headers=headers,data=data, follow_redirects=redirects)
+            print("Response: ",response)
             return response
         else:
             return "ERROR"
-    
-   
-
-    # headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
-    # headers["content-type"]= "application/json"
-    # headers["access-control-allow-origin"]= "*"
-    # headers["access-control-allow-headers"]= "Content-Type,Authorization"
-    # headers["access-control-allow-methods"]= "GET,POST,PUT,DELETE,OPTIONS"
-    # headers["access-control-expose-headers"]= "*"
-    # headers["Origin"]= "https://vidsrc.me"
-    # session.headers.update(headers)
-
-    # proxies= {"http://2.56.119.93:5074",}
-
-    # if method=="GET":
-    #     response= session.get(url, headers=headers, allow_redirects=True, debug=True)
-    #     print("Response: ",response)
-    #     return response
-    # if method=="POST":
-    #     response = await session.post(url,headers=headers,data=data)
-    #     print("Response: ",response)
-    #     return response
-    # else:
-    #     return "ERROR"
