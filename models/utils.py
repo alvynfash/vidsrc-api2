@@ -52,7 +52,7 @@ async def fetch(url:str,headers:dict={},method:str="GET",data=None,redirects:boo
             response = await client.get(
                 url,
                 headers=headers, 
-                cookies={"cf_clearance":"32xoEPSuDPXhdAPfCmau9P3MGnRfXD9_Cs83iEDXWrc-1720956533-1.0.1.1-IY.xEewBEyQ2WLVZHPvephKof6HfFD8LoOGcQrBZEsXW9J9nuNMcyUsGXoku7fgAY_fuECECCJkmztH5nX3Sng"},
+                # cookies={"cf_clearance":"32xoEPSuDPXhdAPfCmau9P3MGnRfXD9_Cs83iEDXWrc-1720956533-1.0.1.1-IY.xEewBEyQ2WLVZHPvephKof6HfFD8LoOGcQrBZEsXW9J9nuNMcyUsGXoku7fgAY_fuECECCJkmztH5nX3Sng"},
                 follow_redirects=redirects,
                 )
             print("Response: ",response)
