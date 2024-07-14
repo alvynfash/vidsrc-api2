@@ -1,4 +1,4 @@
-import httpx,base64
+import httpx,base64,ssl,certifi
 from fastapi import HTTPException
 from urllib.parse import unquote
 
@@ -41,7 +41,9 @@ async def decode_url(encrypted_source_url:str,VIDSRC_KEY:str):
     return unquote(decoded_text)
 
 async def fetch(url:str,headers:dict={},method:str="GET",data=None,redirects:bool=True):
-    async with httpx.AsyncClient(follow_redirects=redirects) as client:
+    context = ssl.create_default_context()
+    context.load_verify_locations(certifi.where())
+    async with httpx.AsyncClient(follow_redirects=redirects, verify=context) as client:
         if method=="GET":
             response = await client.get(url,headers=headers)
             return response
