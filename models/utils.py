@@ -44,6 +44,13 @@ async def fetch(url:str,headers:dict={},method:str="GET",data=None,redirects:boo
     context = ssl.create_default_context()
     context.load_verify_locations(certifi.where())
     async with httpx.AsyncClient(follow_redirects=redirects, verify=context) as client:
+        headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+        headers["content-type"]= "application/json"
+        headers["access-control-allow-origin"]= "*"
+        headers["access-control-allow-headers"]= "Content-Type,Authorization"
+        headers["access-control-allow-methods"]= "GET,POST,PUT,DELETE,OPTIONS"
+        headers["access-control-expose-headers"]= "*"
+        
         if method=="GET":
             response = await client.get(url,headers=headers)
             return response
