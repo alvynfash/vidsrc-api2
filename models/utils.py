@@ -64,15 +64,21 @@ async def fetch(url:str,headers:dict={},method:str="GET",data=None,redirects:boo
     #     else:
     #         return "ERROR"
     
+    print(f"Fetching: {url}")
+
     headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
     headers["content-type"]= "application/json"
     headers["access-control-allow-origin"]= "*"
     headers["access-control-allow-headers"]= "Content-Type,Authorization"
     headers["access-control-allow-methods"]= "GET,POST,PUT,DELETE,OPTIONS"
     headers["access-control-expose-headers"]= "*"
-    print(f"Fetching: {url}")
+    headers["Origin"]= "https://vidsrc.me"
+    session.headers.update(headers)
+
+    proxies= {"http://2.56.119.93:5074",}
+
     if method=="GET":
-        response= session.get(url, headers=headers)
+        response= session.get(url, headers=headers, allow_redirects=True, proxies=proxies, debug=True)
         print("Response: ",response)
         return response
     if method=="POST":
