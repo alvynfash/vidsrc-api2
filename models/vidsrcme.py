@@ -45,6 +45,7 @@ async def get(dbid,s=None,e=None,l='eng'):
     # MAKE API REQUEST TO GET ID(hash)
     id_url = f"https://vidsrc.me/embed/{dbid}" + (f"/{s}-{e}" if s and e else '')
     id_request = await fetch(id_url)
+    print("id_request: ", id_request)
     _html = BeautifulSoup(id_request.text, "html.parser")
     SOURCE_RESULTS = [{"name": attr.text, "hash": attr.get("data-hash")} for attr in _html.find_all("div", {"class": "server"}) if attr.text in SOURCES]
 

@@ -34,9 +34,12 @@ async def get_stream(source_url:str,SOURCE_NAME:str):
 async def get(dbid:str,s:int=None,e:int=None):
     media = 'tv' if s is not None and e is not None else "movie"
     id_url = f"https://vidsrc.to/embed/{media}/{dbid}" + (f"/{s}/{e}" if s and e else '')
+ 
     id_request = await fetch(id_url)
+    print('id_request: ',id_request)
     if id_request.status_code == 200:
         try:
+            print('Fetch works !!!')
             soup = BeautifulSoup(id_request.text, "html.parser")
             sources_code = soup.find('a', {'data-id': True}).get("data-id",None)
             if sources_code == None:
@@ -44,6 +47,7 @@ async def get(dbid:str,s:int=None,e:int=None):
             else:
                 source_id_request = await fetch(f"https://vidsrc.to/ajax/embed/episode/{sources_code}/sources")
                 source_id = source_id_request.json()['result']
+                # print('source_id: ',source_id)
                 SOURCE_RESULTS = []
                 for source in source_id:
                     if source.get('title') in SOURCES:
@@ -52,6 +56,7 @@ async def get(dbid:str,s:int=None,e:int=None):
                 SOURCE_URLS = await asyncio.gather(
                     *[get_source(R.get('id'),R.get('title')) for R in SOURCE_RESULTS]
                 )
+                print('SOURCE_URLS: ',SOURCE_URLS)
                 SOURCE_STREAMS = await asyncio.gather(
                     *[get_stream(R.get('decoded'),R.get('title')) for R in SOURCE_URLS]
                 )
