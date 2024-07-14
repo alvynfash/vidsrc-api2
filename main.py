@@ -12,6 +12,16 @@ from fastapi.responses import StreamingResponse
 
 app = FastAPI()
 
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get('/stream/{dbid}')
 async def stream(dbid:str = '',s:int=None,e:int=None,l:str='eng'):
     if dbid:
