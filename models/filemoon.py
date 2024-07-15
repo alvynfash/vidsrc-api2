@@ -18,10 +18,14 @@ async def handle(url) -> dict:
     key= 'scp-live-9bc4c7e194dd4a19b92213ce243f8243'
     url = f"https://api.scrapfly.io/scrape?tags=player%2Cproject%3Adefault&asp=true&render_js=true&key={key}&url={SRC_URL}"
     request = await requests.request("GET", url)
+    print('Request:', request)
     content = request.json()['result']['content']
     # content = request.text
+    print('Content:', content)
     processed_matches = await process_packed_args(content)
+    print('Processed Matches:', processed_matches)
     unpacked = await unpack(*processed_matches)
+    print('Unpacked:', unpacked)
     hls_url = re.search(r'file:"([^"]*)"', unpacked).group(1)
     return {
         'stream':hls_url,
