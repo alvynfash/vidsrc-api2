@@ -29,6 +29,7 @@ async def get_stream(source_url:str,SOURCE_NAME:str):
         RESULT['data'] = await filemoon.handle(source_url)
         return RESULT
     else:
+        print('none: handle')
         return {"name":SOURCE_NAME,"source":'',"subtitle":[]}
 
 async def get(dbid:str,s:int=None,e:int=None):
@@ -47,19 +48,22 @@ async def get(dbid:str,s:int=None,e:int=None):
             else:
                 source_id_request = await fetch(f"https://vidsrc.to/ajax/embed/episode/{sources_code}/sources")
                 source_id = source_id_request.json()['result']
-                # print('source_id: ',source_id)
+                print('source_id: ',source_id)
                 SOURCE_RESULTS = []
                 for source in source_id:
                     if source.get('title') in SOURCES:
                         SOURCE_RESULTS.append({'id':source.get('id'),'title':source.get('title')})
+                print('SOURCE_RESULTS: ',SOURCE_RESULTS)
 
                 SOURCE_URLS = await asyncio.gather(
                     *[get_source(R.get('id'),R.get('title')) for R in SOURCE_RESULTS]
                 )
                 print('SOURCE_URLS: ',SOURCE_URLS)
+
                 SOURCE_STREAMS = await asyncio.gather(
                     *[get_stream(R.get('decoded'),R.get('title')) for R in SOURCE_URLS]
                 )
+                print('SOURCE_STREAMS: ',SOURCE_STREAMS)
                 return SOURCE_STREAMS
         except:
             return await error("backend id not working.")

@@ -31,6 +31,7 @@ async def decode_data(key: str, data: Union[bytearray, str]) -> bytearray:
 
     return decoded
 async def handle(url) -> dict:
+    print('vidPlay handle')
     URL = url.split("?")
     SRC_URL = URL[0]
     SUB_URL = URL[1]

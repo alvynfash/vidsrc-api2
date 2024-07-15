@@ -3,6 +3,7 @@ import re
 from .decoders.packed import *
 from . import subtitle
 async def handle(url) -> dict:
+    print('Filemoon handle')
     URL = url.split("?")
     SRC_URL = URL[0]
     SUB_URL = URL[1]
